@@ -5,14 +5,14 @@ import (
 	"log"
 	"net/http"
 
+	"cloud-native/app/router"
 	"cloud-native/config"
 )
 
 func main() {
 	appConfig := config.AppConf()
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", Greet)
+	appRouter := router.New()
 
 	address := fmt.Sprintf(":%d", appConfig.Server.Port)
 
@@ -20,7 +20,7 @@ func main() {
 
 	s := &http.Server{
 		Addr:         address,
-		Handler:      mux,
+		Handler:      appRouter,
 		ReadTimeout:  appConfig.Server.Timeoutread,
 		WriteTimeout: appConfig.Server.Timeoutwrite,
 		IdleTimeout:  appConfig.Server.Timeoutidle,
