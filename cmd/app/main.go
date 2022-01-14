@@ -4,16 +4,27 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"time"
+
+	"cloud-native/config"
 )
 
 func main() {
+	appConfig := config.AppConf()
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", Greet)
 
-	log.Println("Starting server :8080")
+	address := fmt.Sprintf(":%d", appConfig.Server.Port)
 
-	s := &http.Server{Addr: ":8080", Handler: mux, ReadTimeout: 30 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 120 * time.Second}
+	log.Printf("Starting server %s\n", address)
+
+	s := &http.Server{
+		Addr:         address,
+		Handler:      mux,
+		ReadTimeout:  appConfig.Server.Timeoutread,
+		WriteTimeout: appConfig.Server.Timeoutwrite,
+		IdleTimeout:  appConfig.Server.Timeoutidle
+	}
 
 	if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal("Server startup failed")
