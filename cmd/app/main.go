@@ -23,7 +23,7 @@ func main() {
 		Handler:      mux,
 		ReadTimeout:  appConfig.Server.Timeoutread,
 		WriteTimeout: appConfig.Server.Timeoutwrite,
-		IdleTimeout:  appConfig.Server.Timeoutidle
+		IdleTimeout:  appConfig.Server.Timeoutidle,
 	}
 
 	if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
