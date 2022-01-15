@@ -2,21 +2,24 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"cloud-native/app/router"
 	"cloud-native/config"
+	"cloud-native/util/logger"
 )
 
 func main() {
 	appConfig := config.AppConf()
 
+	logger := logger.New(appConfig.Server.Debug)
+
 	appRouter := router.New()
 
 	address := fmt.Sprintf(":%d", appConfig.Server.Port)
 
-	log.Printf("Starting server %s\n", address)
+	logger.Info().Msgf("Starting server %s\n", address)
+	// log.Printf("Starting server %s\n", address)
 
 	s := &http.Server{
 		Addr:         address,
@@ -27,7 +30,8 @@ func main() {
 	}
 
 	if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatal("Server startup failed")
+		logger.Fatal().Err(err).Msg("Server failed startup")
+		// log.Fatal("Server startup failed")
 	}
 
 }
