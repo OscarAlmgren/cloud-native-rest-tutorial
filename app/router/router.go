@@ -1,15 +1,17 @@
 package router
 
 import (
-	app "cloud-native/app/server"
+	"cloud-native/app/requestlog"
+	server "cloud-native/app/server"
 
 	"github.com/go-chi/chi"
 )
 
-func New() *chi.Mux {
+func New(server *server.Server) *chi.Mux {
+	logger := server.Logger()
 	router := chi.NewRouter()
 
-	router.MethodFunc("GET", "/", app.HandleIndex)
+	router.Method("GET", "/", requestlog.NewHandler(server.HandleIndex, logger))
 
 	return router
 }
