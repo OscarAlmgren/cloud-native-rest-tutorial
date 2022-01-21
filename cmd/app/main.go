@@ -14,13 +14,14 @@ func main() {
 	appConfig := config.AppConf()
 
 	logger := logger.New(appConfig.Server.Debug)
+	logger.Debug().Msgf("appConfig.Server.Debug=%t", appConfig.Server.Debug)
 
 	application := app.New(logger)
 	appRouter := router.New(application)
 
 	address := fmt.Sprintf(":%d", appConfig.Server.Port)
 
-	logger.Info().Msgf("Starting server %s\n", address)
+	logger.Info().Msgf("Starting server %s", address)
 	// log.Printf("Starting server %s\n", address)
 
 	s := &http.Server{

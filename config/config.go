@@ -23,7 +23,7 @@ type serverConf struct {
 func AppConf() *Conf {
 	var c Conf
 
-	logger := logger.New(true)
+	logger := logger.New(c.Server.Debug)
 
 	if err := envdecode.StrictDecode(&c); err != nil {
 		logger.Fatal().Err(err).Msg("Server failed startup")
