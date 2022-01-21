@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"cloud-native/app/router"
+	app "cloud-native/app/server"
 	"cloud-native/config"
 	"cloud-native/util/logger"
 )
@@ -14,7 +15,8 @@ func main() {
 
 	logger := logger.New(appConfig.Server.Debug)
 
-	appRouter := router.New()
+	application := app.New(logger)
+	appRouter := router.New(application)
 
 	address := fmt.Sprintf(":%d", appConfig.Server.Port)
 
