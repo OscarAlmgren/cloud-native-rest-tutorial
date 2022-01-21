@@ -18,7 +18,7 @@ func NewHandler(h http.HandlerFunc, l *logger.Logger) *Handler {
 	return &Handler{handler: h, logger: l}
 }
 
-func (h *Handler) ServerHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 
 	logEntry := &logEntry{
