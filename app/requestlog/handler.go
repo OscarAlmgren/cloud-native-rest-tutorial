@@ -22,14 +22,20 @@ func (h *Handler) ServerHTTP(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 
 	logEntry := &logEntry{
-		ReceivedTime:      start,
-		RequestMethod:     r.Method,
-		RequestURL:        r.URL.String(),
-		RequestHeaderSize: headerSize(r.Header),
-		UserAgent:         r.UserAgent(),
-		Referer:           r.Referer(),
-		Proto:             r.Proto,
-		RemoteIP:          ipFromHostPort(r.RemoteAddr),
+		ReceivedTime:       start,
+		RequestMethod:      r.Method,
+		RequestURL:         r.URL.String(),
+		RequestHeaderSize:  headerSize(r.Header),
+		RequestBodySize:    0,
+		UserAgent:          r.UserAgent(),
+		Referer:            r.Referer(),
+		Proto:              r.Proto,
+		RemoteIP:           ipFromHostPort(r.RemoteAddr),
+		ServerIP:           "",
+		Status:             0,
+		ResponseHeaderSize: 0,
+		ResponseBodySize:   0,
+		Latency:            0,
 	}
 
 	if addr, ok := r.Context().Value(http.LocalAddrContextKey).(net.Addr); ok {
