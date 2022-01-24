@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile
+      dockerfile: ./docker/app/Dockerfile-multistage
     env_file:
       - ./docker/app/.env
     ports:
