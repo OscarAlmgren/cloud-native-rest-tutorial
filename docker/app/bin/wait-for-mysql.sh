@@ -4,7 +4,7 @@ shift
 cmd="$@"
 until mysql -h "$host" -u ${DB_USER} -p${DB_PASS} ${DB_NAME} -e 'select 1'; do
   >&2 echo "MySQL is unavailable - sleeping"
-  sleep 1
+  sleep 3 # 3 seconds
 done
 >&2 echo "Mysql is up - executing command"
 exec $cmd
