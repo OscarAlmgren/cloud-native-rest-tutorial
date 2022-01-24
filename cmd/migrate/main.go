@@ -15,7 +15,7 @@ const dialect = "mysql"
 
 var (
 	flags       = flag.NewFlagSet("migrate", flag.ExitOnError)
-	dir         = flags.String("dir", "/cloud-native-rest-tutorial/migrations", "directory with migration files")
+	dir         = flags.String("dir", "/cloud-native/migrations", "directory with migration files")
 	usagePrefix = `Usage: migrate [OPTIONS] COMMAND
 Examples:
     migrate status
