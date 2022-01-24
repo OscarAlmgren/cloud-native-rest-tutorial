@@ -9,11 +9,15 @@ RUN go build -ldflags '-w -s' -a -o ./bin/app ./cmd/app \
 
 # Deploy stage
 FROM alpine:3.15
-RUN apk update && apk add --no-cache bash
+RUN apk update && apk add --no-cache bash mysql-client
 
 COPY --from=build-stage /cloud-native/bin/app /cloud-native/
 COPY --from=build-stage /cloud-native/bin/migrate /cloud-native/
 COPY --from=build-stage /cloud-native/migrations /cloud-native/migrations
+
+# copy mysql-live check script
+COPY --from=build-stage /cloud-native/docker/app/bin /usr/local/bin/cloud-native/
+RUN chmod +x /usr/local/bin/cloud-native/*
 
 EXPOSE 8080
 CMD ["/cloud-native/app"]
