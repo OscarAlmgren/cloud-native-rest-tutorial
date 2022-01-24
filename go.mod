@@ -10,6 +10,11 @@ require (
 require github.com/rs/zerolog v1.26.1
 
 require (
+	github.com/jinzhu/gorm v1.9.16 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+)
+
+require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pressly/goose v2.7.0+incompatible
