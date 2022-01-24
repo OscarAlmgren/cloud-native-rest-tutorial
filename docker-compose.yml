@@ -4,13 +4,14 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile
+      dockerfile: ./docker/app/Dockerfile-multistage
     env_file:
       - ./docker/app/.env
     ports:
       - "8080:8080"
     depends_on:
       - db
+    command: ["/usr/local/bin/cloud-native/wait-for-mysql.sh", "db", "/usr/local/bin/cloud-native/clean-up.sh"]
   db:
     build: ./docker/mariadb/
     environment:
