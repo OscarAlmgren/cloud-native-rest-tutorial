@@ -13,7 +13,7 @@ services:
       - db
     command: ["/usr/local/bin/cloud-native/wait-for-mysql.sh", "db", "/usr/local/bin/cloud-native/clean-up.sh"]
   db:
-    build: ./docker/mariadb/Dockerfile
+    build: ./docker/mariadb/
     environment:
       MYSQL_ROOT_PASSWORD: myapp_root_pass
       MYSQL_DATABASE: myapp_db
