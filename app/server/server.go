@@ -1,14 +1,20 @@
 package app
 
-import "cloud-native/util/logger"
+import (
+	"cloud-native/util/logger"
+
+	"github.com/jinzhu/gorm"
+)
 
 type Server struct {
 	logger *logger.Logger
+	db     *gorm.DB
 }
 
-func New(logger *logger.Logger) *Server {
+func New(logger *logger.Logger, db *gorm.DB) *Server {
 	return &Server{
 		logger: logger,
+		db:     db,
 	}
 }
 
