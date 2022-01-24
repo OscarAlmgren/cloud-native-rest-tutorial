@@ -2,21 +2,39 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
-	"time"
+
+	"cloud-native/app/router"
+	app "cloud-native/app/server"
+	"cloud-native/config"
+	"cloud-native/util/logger"
 )
 
 func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", Greet)
+	appConfig := config.AppConf()
 
-	log.Println("Starting server :8080")
+	logger := logger.New(appConfig.Server.Debug)
+	logger.Debug().Msgf("appConfig.Server.Debug: %t", appConfig.Server.Debug)
 
-	s := &http.Server{Addr: ":8080", Handler: mux, ReadTimeout: 30 * time.Second, WriteTimeout: 30 * time.Second, IdleTimeout: 120 * time.Second}
+	application := app.New(logger)
+	appRouter := router.New(application)
+
+	address := fmt.Sprintf(":%d", appConfig.Server.Port)
+
+	logger.Info().Msgf("Starting server %s", address)
+	// log.Printf("Starting server %s\n", address)
+
+	s := &http.Server{
+		Addr:         address,
+		Handler:      appRouter,
+		ReadTimeout:  appConfig.Server.Timeoutread,
+		WriteTimeout: appConfig.Server.Timeoutwrite,
+		IdleTimeout:  appConfig.Server.Timeoutidle,
+	}
 
 	if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatal("Server startup failed")
+		logger.Fatal().Err(err).Msg("Server failed startup")
+		// log.Fatal("Server startup failed")
 	}
 
 }
