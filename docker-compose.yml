@@ -12,7 +12,7 @@ services:
     depends_on:
       - db
   db:
-    build: ./docker/mariadb/
+    build: ./docker/mariadb/Dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: myapp_root_pass
       MYSQL_DATABASE: myapp_db
