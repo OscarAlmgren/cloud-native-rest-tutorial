@@ -14,7 +14,7 @@ func main() {
 	appConfig := config.AppConf()
 
 	logger := logger.New(appConfig.Server.Debug)
-	logger.Debug().Msgf("appConfig.Server.Debug=%t", appConfig.Server.Debug)
+	logger.Debug().Msgf("appConfig.Server.Debug: %t", appConfig.Server.Debug)
 
 	application := app.New(logger)
 	appRouter := router.New(application)
