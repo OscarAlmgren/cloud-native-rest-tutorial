@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	dbConn "cloud-native/adapter/gorm"
 	"cloud-native/app/router"
 	app "cloud-native/app/server"
 	"cloud-native/config"
@@ -16,7 +17,16 @@ func main() {
 	logger := logger.New(appConfig.Server.Debug)
 	logger.Debug().Msgf("appConfig.Server.Debug: %t", appConfig.Server.Debug)
 
-	application := app.New(logger)
+	db, err := dbConn.New(appConfig)
+	if err != nil {
+		logger.Fatal().Err(err).Msg("Database connection failed")
+		return
+	}
+	if appConfig.Debug {
+		db.LogMode(true)
+	}
+
+	application := app.New(logger, db)
 	appRouter := router.New(application)
 
 	address := fmt.Sprintf(":%d", appConfig.Server.Port)
