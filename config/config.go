@@ -30,7 +30,7 @@ type dbConf struct {
 	DbName   string `env:"DB_NAME,required"`
 }
 
-func AppConf() *Conf {
+func ServerConf() *Conf {
 	var c Conf
 
 	logger := logger.New(c.Server.Debug)
