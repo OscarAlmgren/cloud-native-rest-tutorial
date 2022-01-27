@@ -9,9 +9,10 @@ import (
 
 func New(server *server.Server) *chi.Mux {
 	logger := server.Logger()
-	router := chi.NewRouter()
+	chiRouter := chi.NewRouter()
 
-	router.Method("GET", "/", requestlog.NewHandler(server.HandleIndex, logger))
+	chiRouter.Method("GET", "/", requestlog.NewHandler(server.HandleIndex, logger))
+	chiRouter.Get("/healthz/readiness", server.HandleLive)
 
-	return router
+	return chiRouter
 }
