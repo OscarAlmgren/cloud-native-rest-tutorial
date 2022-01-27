@@ -68,7 +68,7 @@ func main() {
 		return
 	}
 
-	appConf := config.AppConf()
+	appConf := config.ServerConf()
 	appDb, err := db.New(appConf)
 	if err != nil {
 		log.Fatalf(err.Error())
