@@ -1,4 +1,4 @@
-package app
+package server
 
 import "net/http"
 
@@ -14,7 +14,7 @@ func writeUnhealthy(w http.ResponseWriter) {
 	w.Write([]byte("."))
 }
 
-func HandleLive(w http.ResponseWriter, _ *http.Request) {
+func (server *Server) HandleLive(w http.ResponseWriter, _ *http.Request) {
 	writeHealthy(w)
 }
 
