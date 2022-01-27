@@ -1,7 +1,8 @@
-version: '3'
+version: '3.8'
 
 services:
   app:
+    image: oscaralmgren/cloud-native:tutorial
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile-multistage
